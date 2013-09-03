@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Game</title>
+</head>
+
+<body id="body">
+
+
+
+</body>
+<script>
+var inputScripts = [
+    // Shared scripts
+    "./js/core.js",
+    "./js/box2D.js",
+    "./js/GameEngine.js",
+    "./js/Entity.js",
+    "./js/PhysicsEngine.js",
+    "./js/Map.js",
+    "./js/WeponInstance.js",
+    "./js/QuadDamage.js",
+    "./js/SoundManager.js",
+    "./js/Project.js",
+];
+
+AssetLoader.loadAsset(inputScripts, function() {
+  window.alert("We have loaded");
+});
+</script>
+
+</html>

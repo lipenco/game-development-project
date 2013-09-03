@@ -1,0 +1,48 @@
+var canvas = null;
+var ctx = null;
+var frameRate = 1000/30;
+var frame = 0;
+var assets = ['img/mario1.png',
+              'img/mario2.png',
+              'img/mario3.png',
+              'img/mario4.png',
+              'img/mario5.png',
+              'img/mario6.png',
+              'img/mario7.png',
+              'img/mario8.png'
+             ];
+var frames = [];
+
+var onImageLoad = function(){
+    console.log("IMAGE!!!");
+};
+
+var setup = function() {
+ var body = document.getElementById("body");
+ var canvas = document.createElement("canvas");
+
+  ctx = canvas.getContext('2d');
+  canvas.width = 1000;
+  canvas.height = 500;
+  body.appendChild(canvas);
+
+  for (var i = 0; i < assets.length; i++ ) {
+    frames.push(new Image());
+    frames[i].onload = onImageLoad;
+    frames[i].src = assets[i];
+  }
+  setInterval(animate, frameRate);
+};
+
+var animate = function(){
+  ctx.clearRect(0,0, 500, 500);
+  ctx.drawImage(frames[frame], 200, 200);
+  frame = (frame +1 ) % frames.length;
+};
+
+
+
+
+
+
+
