@@ -1,32 +1,14 @@
-<!DOCTYPE HTML>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Game</title>
+<meta charset="utf-8" />
+<title>HTML5 Canvas Shooter Game Tutorial Part 1</title>
+<link href="css/style.css" rel="stylesheet">
+<script src="game.js"></script>
 </head>
 
-<body id="body">
-
-
-
+<body>
+<canvas id="canvas" width="600" height="600"></canvas>
 </body>
-<script>
-var inputScripts = [
-    // Shared scripts
-    "./js/core.js",
-    "./js/box2D.js",
-    "./js/GameEngine.js",
-    "./js/Entity.js",
-    "./js/PhysicsEngine.js",
-    "./js/Map.js",
-    "./js/WeponInstance.js",
-    "./js/QuadDamage.js",
-    "./js/SoundManager.js",
-    "./js/Project.js",
-];
-
-AssetLoader.loadAsset(inputScripts, function() {
-  window.alert("We have loaded");
-});
-</script>
-
 </html>
