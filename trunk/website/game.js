@@ -75,6 +75,9 @@ function gameLoop() {
   moveEnemies();
   drawEnemies();
   drawMario();
+  hitTest();
+  drawLaser();
+  moveLaser();
 }
 
 function keyDown(e) {
@@ -92,6 +95,33 @@ function drawLaser() {
       ctx.fillStyle = '#f00';
       ctx.fillRect(lasers[i][0],lasers[i][1],lasers[i][2],lasers[i][3])
     }
+}
+
+function moveLaser() {
+  for (var i = 0; i < lasers.length; i++) {
+    if (lasers[i][1] > -11) {
+      lasers[i][1] -= 10;
+    } else if (lasers[i][1] < -10) {
+      lasers.splice(i, 1);
+    }
+  }
+}
+
+function hitTest() {
+  var remove = false;
+  for (var i = 0; i < lasers.length; i++) {
+    for (var j = 0; j < enemies.length; j++) {
+      if (lasers[i][1] <= (enemies[j][1] + enemies[j][3]) && lasers[i][0] >= enemies[j][0] && lasers[i][0] <= (enemies[j][0] + enemies[j][2])) {
+        remove = true;
+        enemies.splice(j, 1);
+        enemies.push([(Math.random() * 500) + 50, -45, enemy_w, enemy_h, speed]);
+      }
+    }
+    if (remove == true) {
+      lasers.splice(i, 1);
+      remove = false;
+    }
+  }
 }
 
 function keyUp(e) {
