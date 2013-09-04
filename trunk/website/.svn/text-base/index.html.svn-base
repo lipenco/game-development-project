@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <h2>Use keyboard arrows to move and "x" to shoot</h2>
 <canvas id="canvas" width="600" height="600"></canvas>
 </body>
 </html>
