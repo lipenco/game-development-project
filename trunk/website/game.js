@@ -99,28 +99,84 @@ function marioCollision() {
       mario_yh = mario_y + mario_h;
   for (var i = 0; i < enemies.length; i++) {
    if (mario_x > enemies[i][0] && mario_x < enemies[i][0] + enemy_w && mario_y > enemies[i][1] && mario_y < enemies[i][1] + enemy_h) {
-     alive = false;
+     checkLives();
     }
-    if (mario_xw < enemies[i][0] + enemy_w && mario_xw > enemies[i][0] && mario_y > enemies[i][1] && mario_y < enemies[i][1] + enemy_h) {
-     alive = false;
+    if (mario_xw < enemies[i][0] + enemy_w && mario_xw > enemies[i][0] && mario_y > enemies[i][1] && mario_y < enemies[i][1] + enemy_h) {    
+     checkLives();
     }
     if (mario_yh > enemies[i][1] && mario_yh < enemies[i][1] + enemy_h && mario_x > enemies[i][0] && mario_x < enemies[i][0] + enemy_w) {
-     alive = false;
+     checkLives();
     }
     if (mario_yh > enemies[i][1] && mario_yh < enemies[i][1] + enemy_h && mario_xw < enemies[i][0] + enemy_w && mario_xw > enemies[i][0]) {
-     alive = false;
+     checkLives();
     }
   }
 }
 
 function scoreTotal() {
-  ctx.font = 'bold 18px Arial';
-  ctx.fillStyle = '#fff';
-  ctx.fillText('Score: ', 490, 30);
-  ctx.fillText(score, 550, 30);
-  if (!alive) {
-    ctx.fillText('Game Over!', 245, height / 2);
-  }
+ ctx.font = 'bold 18px Arial';
+ ctx.fillStyle = '#fff';
+ ctx.fillText('Score: ', 490, 30);
+ ctx.fillText(score, 550, 30);
+ ctx.fillText('Lives:', 10, 30);
+ ctx.fillText(lives, 68, 30);
+ if (!alive) {
+   ctx.fillText('Game Over!', 245, height / 2);
+   ctx.fillRect((width / 2) - 53, (height / 2) + 10,100,40);
+   ctx.fillStyle = '#000';
+   ctx.fillText('Continue?', 252, (height / 2) + 35);
+   canvas.addEventListener('click', continueButton, false);
+ }
+}
+
+function continueButton(e) {
+ var cursorPos = getCursorPos(e);
+ if (cursorPos.x > (width / 2) - 53 && cursorPos.x < (width / 2) + 47 && cursorPos.y > (height / 2) + 10 && cursorPos.y < (height / 2) + 50) {
+   alive = true;
+   lives = 3;
+   reset();
+   canvas.removeEventListener('click', continueButton, false);
+ }
+}
+
+function getCursorPos(e) {
+ var x;
+ var y;
+ if (e.pageX || e.pageY) {
+   x = e.pageX;
+   y = e.pageY;
+ } else {
+   x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+   y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+ }
+ x -= canvas.offsetLeft;
+ y -= canvas.offsetTop;
+ var cursorPos = new cursorPosition(x, y);
+ return cursorPos;
+}
+
+function cursorPosition(x,y) {
+ this.x = x;
+ this.y = y;
+}
+
+function reset() {
+ var enemy_reset_x = 50;
+ mario_x = (width / 2) - 25, mario_y = height - 75, mario_w = 50, mario_h = 57;
+ for (var i = 0; i < enemies.length; i++) {
+   enemies[i][0] = enemy_reset_x;
+   enemies[i][1] = -45;
+   enemy_reset_x = enemy_reset_x + enemy_w + 60;
+ }
+}
+
+function checkLives() {
+ lives -= 1;
+ if (lives > 0) {
+   reset();
+ } else if (lives == 0) {
+   alive = false;
+ }
 }
 
 function init() {
